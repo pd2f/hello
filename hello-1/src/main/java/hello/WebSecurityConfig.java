@@ -10,10 +10,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
-@Configuration
-@EnableWebSecurity
+/*@Configuration
+@EnableWebSecurity*/
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    @Override
+ /*   @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
@@ -39,5 +39,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .build();
 
         return new InMemoryUserDetailsManager(user);
-    }
+    }*/
 }
