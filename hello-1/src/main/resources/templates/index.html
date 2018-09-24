@@ -1,68 +1,87 @@
 <!doctype html>
-<html lang="en">
-<head>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head  th:fragment="head">
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<title>Demo</title>
 <meta name="description" content="" />
-<meta name="viewport" content="width=device-width" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <base href="/" />
 <link rel="stylesheet" type="text/css"
 	href="/webjars/bootstrap/css/bootstrap.min.css" />
 <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
 <script type="text/javascript"
 	src="/webjars/bootstrap/js/bootstrap.min.js"></script>
-</head>
-<body>
-	<h1>Login</h1>
-	<div class="container unauthenticated">
-		<div>
-			With Facebook: <a href="/login/facebook">click here</a>
-		</div>
-		<div>
-			With Github: <a href="/login/github">click here</a>
-		</div>
-		<div>
-			With Google: <a href="/login/gmail">click here</a>
-		</div>
-		<div>
-			With Local: <a href="/login">click here</a>
-		</div>
-	</div>
-	<div class="container authenticated" style="display: none">
-		Logged in as: [[${#httpServletRequest.remoteUser}]] <span id="user"></span>
-		<div>
-			<button onClick="logout()" class="btn btn-primary">Logout</button>
-		</div>
-	</div>
-	<script type="text/javascript" src="/webjars/js-cookie/js.cookie.js"></script>
-	<script type="text/javascript">
-		$.ajaxSetup({
-			beforeSend : function(xhr, settings) {
-				if (settings.type == 'POST' || settings.type == 'PUT'
-					|| settings.type == 'DELETE') {
-					if (!(/^http:.*/.test(settings.url) || /^https:.*/
-							.test(settings.url))) {
-						// Only send the token to relative URLs i.e. locally.
-						xhr.setRequestHeader("X-XSRF-TOKEN", Cookies
-							.get('XSRF-TOKEN'));
-					}
+<script type="text/javascript" src="/webjars/js-cookie/js.cookie.js"></script>
+<script type="text/javascript">
+	$.ajaxSetup({
+		beforeSend : function(xhr, settings) {
+			if (settings.type == 'POST' || settings.type == 'PUT'
+				|| settings.type == 'DELETE') {
+				if (!(/^http:.*/.test(settings.url) || /^https:.*/
+						.test(settings.url))) {
+					// Only send the token to relative URLs i.e. locally.
+					xhr.setRequestHeader("X-XSRF-TOKEN", Cookies
+						.get('XSRF-TOKEN'));
 				}
 			}
-		});
-		$.get("/user", function(data) {
-			$("#user").html(data.userAuthentication.details.name);
-			$(".unauthenticated").hide();
-			$(".authenticated").show();
-		});
-		var logout = function() {
-			$.post("/logout", function() {
-				$("#user").html('');
-				$(".unauthenticated").show();
-				$(".authenticated").hide();
-			})
-			return true;
 		}
-	</script>
+	});
+	$.get("/user", function(data) {
+		$("#user").html(data.userAuthentication.details.name);
+		$(".unauthenticated").hide();
+		$(".authenticated").show();
+	});
+	var logout = function() {
+		$.post("/logout", function() {
+			$("#user").html('');
+			$(".unauthenticated").show();
+			$(".authenticated").hide();
+		})
+		return true;
+	}
+</script>
+</head>
+<body>
+	<div class="container-fluid" >
+		<nav class="navbar navbar-inverse" th:fragment="menu">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse"
+						data-target="#myNavbar">
+						<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#">Portal</a>
+				</div>
+				<div class="collapse navbar-collapse" id="myNavbar">
+					<ul class="nav navbar-nav">
+						<li class="active"><a href="#">Home</a></li>
+
+						<li><a href="/greeting">Teste</a></li>
+						<li><a href="#">Page 3</a></li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li class="authenticated" style="display: none"><a
+							onClick="logout()"><span class="glyphicon glyphicon-user"
+								id="user"></span> [[${#httpServletRequest.remoteUser}]] <span
+								class="glyphicon glyphicon-log-out"></span></a></li>
+
+						<li class="dropdown unauthenticated" style="display: true"><a
+							class="dropdown-toggle" data-toggle="dropdown" href="#"><span
+								class="glyphicon glyphicon-log-in"></span> Login <span
+								class="caret"></span> </a>
+							<ul class="dropdown-menu">
+								<li><a href="/login/facebook">With Facebook</a></li>
+								<li><a href="/login/github">With Github</a></li>
+								<li><a href="/login/gmail">With Google</a></li>
+								<li><a href="/login">With Local</a></li>
+							</ul></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+		<div class="panel-footer" th:fragment="rodape">Direitos
+			Reservados a Pd2f</div>
+	</div>
 </body>
 </html>

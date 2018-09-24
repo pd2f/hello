@@ -13,5 +13,6 @@ public class MvcConfig implements org.springframework.web.servlet.config.annotat
     registry.addViewController("/").setViewName("index");
     registry.addViewController("/hello").setViewName("hello");
     registry.addViewController("/login").setViewName("login");
+    registry.addViewController("/usuario").setViewName("usuario");
   }
 }
